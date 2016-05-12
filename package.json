@@ -1,0 +1,18 @@
+{
+  "name": "feedreader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kuldeep",
+  "license": "ISC",
+  "dependencies": {
+    "feed-read": "0.0.1",
+    "mongodb": "^2.1.18",
+    "mongoose": "^4.4.16",
+    "q": "^1.4.1",
+    "q-foreach": "0.0.3"
+  }
+}
