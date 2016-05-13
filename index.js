@@ -5,7 +5,6 @@ var Q = require("q");
 require('q-foreach')(Q);
 var reader = require("./custom_module/feed-read");
 var mongoose = require('mongoose');
-var mongodb = require('mongodb');
 var Article = require('./models/article');
 var Feed = require('./models/feed');
 
@@ -22,7 +21,7 @@ function onInsert(err, docs) {
         articleCollection = [];
     }
 }
-var guids;
+var guids=[];
 //var prom = Article.find({}, function(err, result){
 //
 //}).select('guid')
@@ -30,11 +29,12 @@ var guids;
 var prom = Article.find().select('guid').exec();
 
 prom.then(function(article) {
+
     // just getting the stuff for the next query
     guids = article.map(function(a) {
         return a.guid;
     });
-   // console.log(guids);
+    //console.log(guids);
 });
 
 Feed.find({}, function(err, result){
@@ -50,7 +50,7 @@ Feed.find({}, function(err, result){
                 reader(feed.url, function(err, articles) {
                     if (err) throw err;
                     articles.forEach(function(article){
-                        if(guids.indexOf(article.guid)){
+                        if(guids.indexOf(article.guid) !== -1){
                             return;
                         }
                         articleCollection.push({
@@ -82,4 +82,4 @@ Feed.find({}, function(err, result){
             console.log('No document(s) found with defined "find" criteria!');
         }
 
-})
+}).limit(10);
